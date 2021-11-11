@@ -9,8 +9,26 @@ import java.util.List;
 
 public class CustomerDTO {
 
+    private String firstName;
+    private String lastName;
     private AddressDTO address;
     private List<String> details;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
     public AddressDTO getAddress() {
         return address;

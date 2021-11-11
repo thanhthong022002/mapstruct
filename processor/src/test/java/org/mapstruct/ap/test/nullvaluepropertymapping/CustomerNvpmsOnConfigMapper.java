@@ -8,6 +8,7 @@ package org.mapstruct.ap.test.nullvaluepropertymapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(config = NvpmsConfig.class)
@@ -15,6 +16,7 @@ public interface CustomerNvpmsOnConfigMapper {
 
     CustomerNvpmsOnConfigMapper INSTANCE = Mappers.getMapper( CustomerNvpmsOnConfigMapper.class );
 
+    @Mapping(target = "firstName", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE_WHITESPACE)
     void map(Customer customer, @MappingTarget CustomerDTO mappingTarget);
 
     @Mapping(source = "houseNumber", target = "houseNo")

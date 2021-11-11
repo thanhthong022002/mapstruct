@@ -6,8 +6,7 @@
 package org.mapstruct.ap.internal.model.assignment;
 
 import static org.mapstruct.ap.internal.gem.NullValueCheckStrategyGem.ALWAYS;
-import static org.mapstruct.ap.internal.gem.NullValuePropertyMappingStrategyGem.IGNORE;
-import static org.mapstruct.ap.internal.gem.NullValuePropertyMappingStrategyGem.SET_TO_DEFAULT;
+import static org.mapstruct.ap.internal.gem.NullValuePropertyMappingStrategyGem.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -55,7 +54,7 @@ public class ExistingInstanceSetterWrapperForCollectionsAndMaps
         );
         this.mapNullToDefault = SET_TO_DEFAULT == nvpms;
         this.targetType = targetType;
-        this.includeElseBranch = ALWAYS != nvcs && IGNORE != nvpms;
+        this.includeElseBranch = ALWAYS != nvcs && IGNORE != nvpms && IGNORE_WHITESPACE != nvpms;
     }
 
     @Override

@@ -20,9 +20,15 @@
         }
         <@elseDefaultAssignment/>
     <#elseif includeSourceNullCheck || ext.defaultValueAssignment??>
-        if ( <#if sourceLocalVarName??>${sourceLocalVarName}<#else>${sourceReference}</#if> != null ) {
-            <#nested>
-        }
+        <#if sourceType.isString()>
+            if ( <#if sourceLocalVarName??>${sourceLocalVarName}<#else>${sourceReference}</#if> != null <#if whitespaceStringAsNull>&& !<#if sourceLocalVarName??>${sourceLocalVarName}<#else>${sourceReference}</#if>.isBlank()</#if>) {
+                <#nested>
+            }
+        <#else>
+            if ( <#if sourceLocalVarName??>${sourceLocalVarName}<#else>${sourceReference}</#if> != null ) {
+                <#nested>
+            }
+        </#if>
         <@elseDefaultAssignment/>
     <#else>
         <#nested>

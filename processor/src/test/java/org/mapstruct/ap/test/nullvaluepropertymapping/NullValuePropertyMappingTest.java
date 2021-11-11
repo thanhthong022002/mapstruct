@@ -59,25 +59,25 @@ public class NullValuePropertyMappingTest {
     @Test
     @WithClasses({ NvpmsConfig.class, CustomerNvpmsOnConfigMapper.class })
     public void testHierarchyIgnoreOnConfig() {
-        testConfig( CustomerNvpmsOnConfigMapper.INSTANCE::map );
+        testConfigWhiteSpace( CustomerNvpmsOnConfigMapper.INSTANCE::map );
     }
 
     @Test
     @WithClasses(CustomerNvpmsOnMapperMapper.class)
     public void testHierarchyIgnoreOnMapping() {
-        testConfig( CustomerNvpmsOnMapperMapper.INSTANCE::map );
+        testConfigWhiteSpace( CustomerNvpmsOnMapperMapper.INSTANCE::map );
     }
 
     @Test
     @WithClasses(CustomerNvpmsOnBeanMappingMethodMapper.class)
     public void testHierarchyIgnoreOnBeanMappingMethod() {
-        testConfig( CustomerNvpmsOnBeanMappingMethodMapper.INSTANCE::map );
+        testConfigWhiteSpace( CustomerNvpmsOnBeanMappingMethodMapper.INSTANCE::map );
     }
 
     @Test
     @WithClasses(CustomerNvpmsPropertyMappingMapper.class)
     public void testHierarchyIgnoreOnPropertyMappingMethod() {
-        testConfig( CustomerNvpmsPropertyMappingMapper.INSTANCE::map );
+        testConfigWhiteSpace( CustomerNvpmsPropertyMappingMapper.INSTANCE::map );
     }
 
     @Test
@@ -194,6 +194,30 @@ public class NullValuePropertyMappingTest {
 
         customerMapper.accept( customer, customerDto );
 
+        assertThat( customerDto.getAddress() ).isNotNull();
+        assertThat( customerDto.getAddress().getHouseNo() ).isEqualTo( 5 );
+        assertThat( customerDto.getDetails() ).isNotNull();
+        assertThat( customerDto.getDetails() ).containsExactly( "green hair" );
+    }
+
+    private void testConfigWhiteSpace(BiConsumer<Customer, CustomerDTO> customerMapper) {
+
+        Customer customer = new Customer();
+        customer.setAddress( null );
+        customer.setFirstName("");
+        customer.setLastName("");
+
+        CustomerDTO customerDto = new CustomerDTO();
+        customerDto.setFirstName("Thong");
+        customerDto.setLastName("Nguyen");
+        customerDto.setAddress( new AddressDTO() );
+        customerDto.getAddress().setHouseNo( 5 );
+        customerDto.setDetails( Arrays.asList( "green hair" ) );
+
+        customerMapper.accept( customer, customerDto );
+
+        assertThat( customerDto.getFirstName() ).isEqualTo("Thong");
+        assertThat( customerDto.getLastName() ).isEqualTo("");
         assertThat( customerDto.getAddress() ).isNotNull();
         assertThat( customerDto.getAddress().getHouseNo() ).isEqualTo( 5 );
         assertThat( customerDto.getDetails() ).isNotNull();

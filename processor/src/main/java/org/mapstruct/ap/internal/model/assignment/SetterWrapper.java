@@ -15,6 +15,7 @@ import org.mapstruct.ap.internal.gem.NullValuePropertyMappingStrategyGem;
 
 import static org.mapstruct.ap.internal.gem.NullValueCheckStrategyGem.ALWAYS;
 import static org.mapstruct.ap.internal.gem.NullValuePropertyMappingStrategyGem.IGNORE;
+import static org.mapstruct.ap.internal.gem.NullValuePropertyMappingStrategyGem.IGNORE_WHITESPACE;
 import static org.mapstruct.ap.internal.gem.NullValuePropertyMappingStrategyGem.SET_TO_DEFAULT;
 
 /**
@@ -26,6 +27,7 @@ public class SetterWrapper extends AssignmentWrapper {
 
     private final List<Type> thrownTypesToExclude;
     private final boolean includeSourceNullCheck;
+    private final boolean whitespaceStringAsNull;
     private final boolean setExplicitlyToNull;
     private final boolean setExplicitlyToDefault;
 
@@ -33,12 +35,14 @@ public class SetterWrapper extends AssignmentWrapper {
                          List<Type> thrownTypesToExclude,
                          boolean fieldAssignment,
                          boolean includeSourceNullCheck,
+                         boolean whitespaceStringAsNull,
                          boolean setExplicitlyToNull,
                          boolean setExplicitlyToDefault) {
 
         super( rhs, fieldAssignment );
         this.thrownTypesToExclude = thrownTypesToExclude;
         this.includeSourceNullCheck = includeSourceNullCheck;
+        this.whitespaceStringAsNull = whitespaceStringAsNull;
         this.setExplicitlyToDefault = setExplicitlyToDefault;
         this.setExplicitlyToNull = setExplicitlyToNull;
     }
@@ -47,6 +51,7 @@ public class SetterWrapper extends AssignmentWrapper {
         super( rhs, fieldAssignment );
         this.thrownTypesToExclude = thrownTypesToExclude;
         this.includeSourceNullCheck = false;
+        this.whitespaceStringAsNull = false;
         this.setExplicitlyToNull = false;
         this.setExplicitlyToDefault = false;
     }
@@ -77,6 +82,10 @@ public class SetterWrapper extends AssignmentWrapper {
         return includeSourceNullCheck;
     }
 
+    public boolean isWhitespaceStringAsNull() {
+        return whitespaceStringAsNull;
+    }
+
     /**
      * Wraps the assignment in a target setter. include a null check when
      *
@@ -97,7 +106,7 @@ public class SetterWrapper extends AssignmentWrapper {
         return !rhs.isSourceReferenceParameter()
             && !rhs.getSourceType().isPrimitive()
             && (ALWAYS == nvcs
-            || SET_TO_DEFAULT == nvpms || IGNORE == nvpms
+            || SET_TO_DEFAULT == nvpms || IGNORE == nvpms || IGNORE_WHITESPACE == nvpms
             || rhs.getType().isConverted()
             || (rhs.getType().isDirect() && targetType.isPrimitive()));
     }

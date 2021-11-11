@@ -46,12 +46,11 @@ import org.mapstruct.ap.internal.util.ValueProvider;
 import org.mapstruct.ap.internal.util.accessor.Accessor;
 import org.mapstruct.ap.internal.util.accessor.AccessorType;
 
+import static org.mapstruct.ap.internal.gem.NullValuePropertyMappingStrategyGem.*;
 import static org.mapstruct.ap.internal.model.ForgedMethod.forElementMapping;
 import static org.mapstruct.ap.internal.model.ForgedMethod.forParameterMapping;
 import static org.mapstruct.ap.internal.model.ForgedMethod.forPropertyMapping;
 import static org.mapstruct.ap.internal.model.common.Assignment.AssignmentType.DIRECT;
-import static org.mapstruct.ap.internal.gem.NullValuePropertyMappingStrategyGem.SET_TO_DEFAULT;
-import static org.mapstruct.ap.internal.gem.NullValuePropertyMappingStrategyGem.SET_TO_NULL;
 
 /**
  * Represents the mapping between a source and target property, e.g. from {@code String Source#foo} to
@@ -433,6 +432,7 @@ public class PropertyMapping extends ModelElement {
                     method.getThrownTypes(),
                     isFieldAssignment(),
                     includeSourceNullCheck,
+                    IGNORE_WHITESPACE == nvpms,
                     includeSourceNullCheck && nvpms == SET_TO_NULL && !targetType.isPrimitive(),
                     nvpms == SET_TO_DEFAULT );
             }
@@ -457,6 +457,7 @@ public class PropertyMapping extends ModelElement {
                     method.getThrownTypes(),
                     isFieldAssignment(),
                     true,
+                    nvpms == IGNORE_WHITESPACE,
                     nvpms == SET_TO_NULL && !targetType.isPrimitive(),
                     nvpms == SET_TO_DEFAULT
                 );

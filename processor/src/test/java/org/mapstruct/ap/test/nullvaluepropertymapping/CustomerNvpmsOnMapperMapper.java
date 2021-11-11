@@ -16,6 +16,7 @@ public interface CustomerNvpmsOnMapperMapper {
 
     CustomerNvpmsOnMapperMapper INSTANCE = Mappers.getMapper( CustomerNvpmsOnMapperMapper.class );
 
+    @Mapping(target = "firstName", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE_WHITESPACE)
     void map(Customer customer, @MappingTarget CustomerDTO mappingTarget);
 
     @Mapping(source = "houseNumber", target = "houseNo")

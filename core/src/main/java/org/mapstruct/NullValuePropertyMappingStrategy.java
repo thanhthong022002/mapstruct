@@ -53,5 +53,10 @@ public enum NullValuePropertyMappingStrategy {
      * If a source bean property equals {@code null} the target bean property will be ignored and retain its
      * existing value.
      */
-    IGNORE;
+    IGNORE,
+
+    /**
+     * The same with IGNORE and include whitespace string
+     */
+    IGNORE_WHITESPACE;
 }
