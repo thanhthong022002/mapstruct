@@ -35,6 +35,7 @@ public class ExistingInstanceSetterWrapperForCollectionsAndMaps
 
     private final boolean includeElseBranch;
     private final boolean mapNullToDefault;
+    private final boolean emptyAsNull;
     private final Type targetType;
 
     public ExistingInstanceSetterWrapperForCollectionsAndMaps(Assignment decoratedAssignment,
@@ -53,8 +54,9 @@ public class ExistingInstanceSetterWrapperForCollectionsAndMaps
             fieldAssignment
         );
         this.mapNullToDefault = SET_TO_DEFAULT == nvpms;
+        this.emptyAsNull = IGNORE_EMPTY == nvpms;
         this.targetType = targetType;
-        this.includeElseBranch = ALWAYS != nvcs && IGNORE != nvpms && IGNORE_WHITESPACE != nvpms;
+        this.includeElseBranch = ALWAYS != nvcs && IGNORE != nvpms && IGNORE_EMPTY != nvpms;
     }
 
     @Override
@@ -74,4 +76,7 @@ public class ExistingInstanceSetterWrapperForCollectionsAndMaps
         return mapNullToDefault;
     }
 
+    public boolean isEmptyAsNull() {
+        return emptyAsNull;
+    }
 }

@@ -13,6 +13,7 @@ public class Customer {
     private String lastName;
     private Address address;
     private List<String> details;
+    private List<String> phones;
 
     public String getFirstName() {
         return firstName;
@@ -44,5 +45,13 @@ public class Customer {
 
     public void setDetails(List<String> details) {
         this.details = details;
+    }
+
+    public List<String> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(List<String> phones) {
+        this.phones = phones;
     }
 }

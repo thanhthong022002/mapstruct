@@ -5,9 +5,10 @@
  */
 package org.mapstruct.ap.test.nullvaluepropertymapping;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.BiConsumer;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mapstruct.ap.testutil.IssueKey;
@@ -206,6 +207,7 @@ public class NullValuePropertyMappingTest {
         customer.setAddress( null );
         customer.setFirstName("");
         customer.setLastName("");
+        customer.setPhones(new ArrayList<>());
 
         CustomerDTO customerDto = new CustomerDTO();
         customerDto.setFirstName("Thong");
@@ -213,6 +215,10 @@ public class NullValuePropertyMappingTest {
         customerDto.setAddress( new AddressDTO() );
         customerDto.getAddress().setHouseNo( 5 );
         customerDto.setDetails( Arrays.asList( "green hair" ) );
+
+        List<String> phones = new ArrayList<>();
+        phones.add("1");
+        customerDto.setPhones( phones );
 
         customerMapper.accept( customer, customerDto );
 
@@ -222,5 +228,6 @@ public class NullValuePropertyMappingTest {
         assertThat( customerDto.getAddress().getHouseNo() ).isEqualTo( 5 );
         assertThat( customerDto.getDetails() ).isNotNull();
         assertThat( customerDto.getDetails() ).containsExactly( "green hair" );
+        assertThat( customerDto.getPhones() ).containsExactly("1");
     }
 }

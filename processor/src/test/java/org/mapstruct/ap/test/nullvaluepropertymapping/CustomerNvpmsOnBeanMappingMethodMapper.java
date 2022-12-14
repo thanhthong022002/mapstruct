@@ -18,7 +18,8 @@ public interface CustomerNvpmsOnBeanMappingMethodMapper {
     CustomerNvpmsOnBeanMappingMethodMapper INSTANCE = Mappers.getMapper( CustomerNvpmsOnBeanMappingMethodMapper.class );
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "firstName", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE_WHITESPACE)
+    @Mapping(target = "firstName", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE_EMPTY)
+    @Mapping(target = "phones", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE_EMPTY)
     void map(Customer customer, @MappingTarget CustomerDTO mappingTarget);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

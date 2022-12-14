@@ -56,7 +56,7 @@ public enum NullValuePropertyMappingStrategy {
     IGNORE,
 
     /**
-     * The same with IGNORE and include whitespace string
+     * The same with IGNORE and include whitespace string, empty collection
      */
-    IGNORE_WHITESPACE;
+    IGNORE_EMPTY;
 }

@@ -11,17 +11,18 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;
-import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE_WHITESPACE;
+import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE_EMPTY;
 
 @Mapper
 public interface CustomerNvpmsPropertyMappingMapper {
 
     CustomerNvpmsPropertyMappingMapper INSTANCE = Mappers.getMapper( CustomerNvpmsPropertyMappingMapper.class );
 
-    @Mapping( target = "firstName", nullValuePropertyMappingStrategy = IGNORE_WHITESPACE)
+    @Mapping( target = "firstName", nullValuePropertyMappingStrategy = IGNORE_EMPTY)
     @Mapping( target = "lastName", nullValuePropertyMappingStrategy = IGNORE)
     @Mapping( target = "address", nullValuePropertyMappingStrategy = IGNORE)
     @Mapping( target = "details", nullValuePropertyMappingStrategy = IGNORE)
+    @Mapping( target = "phones", nullValuePropertyMappingStrategy = IGNORE_EMPTY)
     void map(Customer customer, @MappingTarget CustomerDTO mappingTarget);
 
     @Mapping(source = "houseNumber", target = "houseNo")

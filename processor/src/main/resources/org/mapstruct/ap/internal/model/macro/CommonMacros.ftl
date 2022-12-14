@@ -21,13 +21,20 @@
         <@elseDefaultAssignment/>
     <#elseif includeSourceNullCheck || ext.defaultValueAssignment??>
         <#if sourceType.isString()>
-            if ( <#if sourceLocalVarName??>${sourceLocalVarName}<#else>${sourceReference}</#if> != null <#if whitespaceStringAsNull>&& !<#if sourceLocalVarName??>${sourceLocalVarName}<#else>${sourceReference}</#if>.isBlank()</#if>) {
+            if ( <#if sourceLocalVarName??>${sourceLocalVarName}<#else>${sourceReference}</#if> != null <#if emptyAsNull>&& !<#if sourceLocalVarName??>${sourceLocalVarName}<#else>${sourceReference}</#if>.isBlank()</#if>) {
                 <#nested>
             }
         <#else>
-            if ( <#if sourceLocalVarName??>${sourceLocalVarName}<#else>${sourceReference}</#if> != null ) {
-                <#nested>
-            }
+            // not string
+            <#if sourceType.isCollectionType()>
+                if ( <#if sourceLocalVarName??>${sourceLocalVarName}<#else>${sourceReference}</#if> != null <#if emptyAsNull>&& !<#if sourceLocalVarName??>${sourceLocalVarName}<#else>${sourceReference}</#if>.isEmpty()</#if>) {
+                    <#nested>
+                }
+            <#else>
+                if ( <#if sourceLocalVarName??>${sourceLocalVarName}<#else>${sourceReference}</#if> != null ) {
+                    <#nested>
+                }
+            </#if>
         </#if>
         <@elseDefaultAssignment/>
     <#else>
@@ -61,7 +68,7 @@
            requires: caller to implement String:getNullCheckLocalVarName()
                      caller to implement Type:getNullCheckLocalVarType()
 -->
-<#macro handleLocalVarNullCheck needs_explicit_local_var>
+<#macro handleLocalVarNullCheck needs_explicit_local_var empty_as_null=false>
   <#if sourcePresenceCheckerReference??>
     if ( ${sourcePresenceCheckerReference} ) {
       <#if needs_explicit_local_var>
@@ -73,9 +80,15 @@
     }
   <#else>
     <@includeModel object=nullCheckLocalVarType/> ${nullCheckLocalVarName} = <@lib.handleAssignment/>;
-    if ( ${nullCheckLocalVarName} != null ) {
-      <#nested>
-    }
+    <#if empty_as_null>
+        if ( ${nullCheckLocalVarName} != null && !${nullCheckLocalVarName}.isEmpty()) {
+        <#nested>
+        }
+    <#else>
+        if ( ${nullCheckLocalVarName} != null ) {
+        <#nested>
+        }
+    </#if>
   </#if>
   <#if ext.defaultValueAssignment?? >
   else {

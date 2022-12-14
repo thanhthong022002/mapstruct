@@ -10,7 +10,7 @@
 <@lib.sourceLocalVarAssignment/>
 <@lib.handleExceptions>
   if ( ${ext.targetBeanName}.${ext.targetReadAccessorName} != null ) {
-      <@lib.handleLocalVarNullCheck needs_explicit_local_var=false>
+      <@lib.handleLocalVarNullCheck needs_explicit_local_var=false empty_as_null=emptyAsNull>
       ${ext.targetBeanName}.${ext.targetReadAccessorName}.clear();
       ${ext.targetBeanName}.${ext.targetReadAccessorName}.<#if ext.targetType.collectionType>addAll<#else>putAll</#if>( <@lib.handleWithAssignmentOrNullCheckVar/> );
       </@lib.handleLocalVarNullCheck>
@@ -27,7 +27,7 @@
   assigns the target via the regular target write accessor (usually the setter)
 -->
 <#macro callTargetWriteAccessor>
-  <@lib.handleLocalVarNullCheck needs_explicit_local_var=directAssignment>
+  <@lib.handleLocalVarNullCheck needs_explicit_local_var=directAssignment empty_as_null=emptyAsNull>
     ${ext.targetBeanName}.${ext.targetWriteAccessorName}<@lib.handleWrite><#if directAssignment><@wrapLocalVarInCollectionInitializer/><#else><@lib.handleWithAssignmentOrNullCheckVar/></#if></@lib.handleWrite>;
   </@lib.handleLocalVarNullCheck>
 </#macro>

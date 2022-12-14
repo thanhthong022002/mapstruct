@@ -432,7 +432,7 @@ public class PropertyMapping extends ModelElement {
                     method.getThrownTypes(),
                     isFieldAssignment(),
                     includeSourceNullCheck,
-                    IGNORE_WHITESPACE == nvpms,
+                    IGNORE_EMPTY == nvpms,
                     includeSourceNullCheck && nvpms == SET_TO_NULL && !targetType.isPrimitive(),
                     nvpms == SET_TO_DEFAULT );
             }
@@ -457,7 +457,7 @@ public class PropertyMapping extends ModelElement {
                     method.getThrownTypes(),
                     isFieldAssignment(),
                     true,
-                    nvpms == IGNORE_WHITESPACE,
+                    nvpms == IGNORE_EMPTY,
                     nvpms == SET_TO_NULL && !targetType.isPrimitive(),
                     nvpms == SET_TO_DEFAULT
                 );
