@@ -21,6 +21,16 @@ import org.mapstruct.ap.internal.model.common.SourceRHS;
  */
 public class SelectionParameters {
 
+    private static final SelectionParameters EMPTY = new SelectionParameters(
+        Collections.emptyList(),
+        Collections.emptyList(),
+        Collections.emptyList(),
+        Collections.emptyList(),
+        null,
+        null,
+        null
+    );
+
     private final List<TypeMirror> qualifiers;
     private final List<String> qualifyingNames;
     private final List<TypeMirror> conditionQualifiers;
@@ -39,6 +49,10 @@ public class SelectionParameters {
      * @return the selection parameters based on the given ones
      */
     public static SelectionParameters forInheritance(SelectionParameters selectionParameters) {
+        return withoutResultType( selectionParameters );
+    }
+
+    public static SelectionParameters withoutResultType(SelectionParameters selectionParameters) {
         return new SelectionParameters(
             selectionParameters.qualifiers,
             selectionParameters.qualifyingNames,
@@ -221,4 +235,9 @@ public class SelectionParameters {
             sourceRHS
         );
     }
+
+    public static SelectionParameters empty() {
+        return EMPTY;
+    }
+
 }

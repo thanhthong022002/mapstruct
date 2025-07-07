@@ -21,15 +21,19 @@ import org.mapstruct.EnumMapping;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.IterableMapping;
+import org.mapstruct.Javadoc;
 import org.mapstruct.MapMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MapperConfig;
 import org.mapstruct.Mapping;
+import org.mapstruct.Ignored;
+import org.mapstruct.IgnoredList;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 import org.mapstruct.ObjectFactory;
 import org.mapstruct.Qualifier;
+import org.mapstruct.SourcePropertyName;
 import org.mapstruct.SubclassMapping;
 import org.mapstruct.SubclassMappings;
 import org.mapstruct.TargetPropertyName;
@@ -51,11 +55,14 @@ import org.mapstruct.tools.gem.GemDefinition;
 @GemDefinition(AnnotateWiths.class)
 @GemDefinition(Mapper.class)
 @GemDefinition(Mapping.class)
+@GemDefinition(Ignored.class)
+@GemDefinition(IgnoredList.class)
 @GemDefinition(Mappings.class)
 @GemDefinition(IterableMapping.class)
 @GemDefinition(BeanMapping.class)
 @GemDefinition(EnumMapping.class)
 @GemDefinition(MapMapping.class)
+@GemDefinition(SourcePropertyName.class)
 @GemDefinition(SubclassMapping.class)
 @GemDefinition(SubclassMappings.class)
 @GemDefinition(TargetType.class)
@@ -75,6 +82,7 @@ import org.mapstruct.tools.gem.GemDefinition;
 @GemDefinition(Context.class)
 @GemDefinition(Builder.class)
 @GemDefinition(Condition.class)
+@GemDefinition(Javadoc.class)
 
 @GemDefinition(MappingControl.class)
 @GemDefinition(MappingControls.class)

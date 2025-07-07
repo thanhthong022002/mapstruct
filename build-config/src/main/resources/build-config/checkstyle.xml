@@ -29,7 +29,9 @@
     <!-- See http://checkstyle.sf.net/config_misc.html#Translation -->
     <module name="Translation"/>
 
-    <module name="FileLength"/>
+    <module name="FileLength">
+        <property name="max" value="2500"/>
+    </module>
 
     <module name="LineLength">
         <property name="max" value="120"/>
@@ -144,7 +146,9 @@
         </module>
         <module name="TypecastParenPad"/>
         <module name="WhitespaceAfter"/>
-        <module name="WhitespaceAround"/>
+        <module name="WhitespaceAround">
+            <property name="ignoreEnhancedForColon" value="false"/>
+        </module>
 
         <module name="EmptyLineSeparator">
             <property name="tokens" value="IMPORT, CLASS_DEF, INTERFACE_DEF, STATIC_INIT, INSTANCE_INIT, METHOD_DEF, CTOR_DEF, VARIABLE_DEF"/>

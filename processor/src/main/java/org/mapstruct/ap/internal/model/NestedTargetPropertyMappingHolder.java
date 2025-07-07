@@ -64,7 +64,7 @@ public class NestedTargetPropertyMappingHolder {
     }
 
     /**
-     * @return all the targets that were hanled
+     * @return all the targets that were handled
      */
     public Set<String> getHandledTargets() {
         return handledTargets;
@@ -226,7 +226,7 @@ public class NestedTargetPropertyMappingHolder {
                         handledTargets.add( entryByTP.getKey() );
                     }
 
-                    // For the nonNested mappings (assymetric) Mappings we also forge mappings
+                    // For the nonNested mappings (asymmetric) Mappings we also forge mappings
                     // However, here we do not forge name based mappings and we only
                     // do update on the defined Mappings.
                     if ( !groupedSourceReferences.nonNested.isEmpty() ) {
@@ -362,7 +362,13 @@ public class NestedTargetPropertyMappingHolder {
             Map<String, Set<MappingReference>> singleTargetReferences = new LinkedHashMap<>();
             for ( MappingReference mapping : mappingReferences.getMappingReferences() )  {
                 TargetReference targetReference = mapping.getTargetReference();
-                String property = first( targetReference.getPropertyEntries() );
+                List<String> propertyEntries = targetReference.getPropertyEntries();
+                if ( propertyEntries.isEmpty() ) {
+                    // This can happen if the target property is target = ".",
+                    // this usually happens when doing a reverse mapping
+                    continue;
+                }
+                String property = first( propertyEntries );
                 MappingReference newMapping = mapping.popTargetReference();
                 if ( newMapping != null ) {
                     // group properties on current name.
@@ -607,7 +613,7 @@ public class NestedTargetPropertyMappingHolder {
          * @param hasNoMappings parameter indicating whether there were any extracted mappings for this target property
          * @param sourceParameter the source parameter for which the grouping is being done
          *
-         * @return a list with valid single target references
+         * @return a set with valid single target references
          */
         private Set<MappingReference> extractSingleTargetReferencesToUseAndPopulateSourceParameterMappings(
             Set<MappingReference> singleTargetReferences, Set<MappingReference> sourceParameterMappings,
@@ -643,7 +649,10 @@ public class NestedTargetPropertyMappingHolder {
                                                                      boolean forceUpdateMethod) {
 
             Accessor targetWriteAccessor = targetPropertiesWriteAccessors.get( targetPropertyName );
-            ReadAccessor targetReadAccessor = targetType.getReadAccessor( targetPropertyName );
+            ReadAccessor targetReadAccessor = targetType.getReadAccessor(
+                targetPropertyName,
+                method.getSourceParameters().size() == 1
+            );
             if ( targetWriteAccessor == null ) {
                 Set<String> readAccessors = targetType.getPropertyReadAccessors().keySet();
                 String mostSimilarProperty = Strings.getMostSimilarWord( targetPropertyName, readAccessors );
@@ -746,7 +755,7 @@ public class NestedTargetPropertyMappingHolder {
     }
 
     /**
-     * This class is used to group Source references in respected to the nestings that they have.
+     * This class is used to group Source references in respected to the nesting that they have.
      *
      * This class contains all groupings by Property Entries if they are nested, or a list of all the other options
      * that could not have been popped.

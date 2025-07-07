@@ -83,20 +83,12 @@ public interface Method {
     Parameter getMappingTargetParameter();
 
     /**
-     * Returns whether the meethod is designated as bean factory for
+     * Returns whether the method is designated as bean factory for
      * mapping target {@link  org.mapstruct.ObjectFactory }
      *
      * @return true if it is a target bean factory.
      */
     boolean isObjectFactory();
-
-    /**
-     * Returns whether the method is designated as a presence check method
-     * @return {@code true} if it is a presence check method
-     */
-    default boolean isPresenceCheck() {
-        return false;
-    }
 
     /**
      * Returns the parameter designated as target type (if present) {@link org.mapstruct.TargetType }
@@ -186,6 +178,10 @@ public interface Method {
      * @return the mapping options for this method
      */
     MappingMethodOptions getOptions();
+
+    default ConditionMethodOptions getConditionOptions() {
+        return ConditionMethodOptions.empty();
+    }
 
     /**
      *
